@@ -1,4 +1,4 @@
-# Gloomhaven Simulator
+# Gloomhaven Damage Simulator
 
 Attack modifier deck simulator and probability calculator for the popular board game and Steam game Gloomhaven. The probablity calculations are non-trivial given the re-shuffling logic.
 
