@@ -1,14 +1,12 @@
-# Gloomhaven Damage Simulator
-
-Attack modifier deck simulator and probability calculator for the popular board game and Steam game Gloomhaven. The probablity calculations are non-trivial given the re-shuffling logic.
-
-Here's an example of the calculated probabilities for the base modifier deck:
-
-<h3 align=left> Attack PDFs </h3>
-
-![](./assets/base_deck.jpg)
-
-<h3 align=left> Attack CDF Table </h3>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
 
 <table border="0" class="dataframe table">
   <thead>
@@ -109,72 +107,6 @@ Here's an example of the calculated probabilities for the base modifier deck:
       <td>1.0000</td>
       <td>1.0000</td>
       <td>1.0000</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 align=left> Attack Summary Stats Table </h3>
-
-
-<table border="0" class="dataframe table">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>base_attack_1</th>
-      <th>base_attack_2</th>
-      <th>base_attack_3</th>
-      <th>base_attack_4</th>
-      <th>base_attack_5</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>min</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>median</th>
-      <td>1.000000</td>
-      <td>2.000000</td>
-      <td>3.000000</td>
-      <td>4.000000</td>
-      <td>5.000000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>3.000000</td>
-      <td>4.000000</td>
-      <td>6.000000</td>
-      <td>8.000000</td>
-      <td>10.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>1.059600</td>
-      <td>1.986100</td>
-      <td>3.035300</td>
-      <td>3.994600</td>
-      <td>4.970600</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>0.923652</td>
-      <td>1.192581</td>
-      <td>1.451229</td>
-      <td>1.769204</td>
-      <td>2.104466</td>
-    </tr>
-    <tr>
-      <th>mode</th>
-      <td>0.000000</td>
-      <td>2.000000</td>
-      <td>3.000000</td>
-      <td>4.000000</td>
-      <td>5.000000</td>
     </tr>
   </tbody>
 </table>

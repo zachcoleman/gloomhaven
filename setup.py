@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gloomhaven-zachcoleman",
-    version="0.0.1",
+    version="0.0.2",
     author="Zachary Coleman",
     author_email="zacharywcoleman@gmail.com",
     description="A small package for running Gloomhaven attack modifier deck simulations",
@@ -21,6 +21,12 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    include_requires=[
+        "pyyaml",
+    ],
+    extras_requires={
+        "analyze_deck": ["pandas==1.2.4", "dask==2021.4.1", "matplotlib==3.4.1", ]
+    },
     packages=["gloomhaven"],
     python_requires=">=3.9",
 )
