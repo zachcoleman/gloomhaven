@@ -7,7 +7,7 @@ class GloomhavenDeck:
 
     def __init__(self, cards=None):
         self.current_deck = []      
-        if cards is None:
+        if cards is None or len(cards) < 1:
             self.card_list = DEFAULT_DECK
         else:
             self.card_list = cards
