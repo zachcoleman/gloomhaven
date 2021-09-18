@@ -3,7 +3,7 @@ name = "gloomhaven"
 packages = [
     { include = "gloomhaven" },
 ]
-version = "0.2.0"
+version = "0.3.0"
 description = "Probability evaluation of Gloomhaven attack modifier decks"
 authors = ["Zachary Coleman <zacharywcoleman@gmail.com>"]
 license = "MIT License"
