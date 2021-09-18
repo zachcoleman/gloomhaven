@@ -1,20 +1,21 @@
-
 import random
+
 from .constants import DEFAULT_DECK, MODIFIER_APPLIER, RESET_LIST
+
 
 class GloomhavenDeck:
     RESET_LIST = RESET_LIST
 
     def __init__(self, cards=None, name=None):
         self.current_deck = []
-        self.name = name  
+        self.name = name
         if cards is None or len(cards) < 1:
             self.card_list = DEFAULT_DECK
         else:
             self.card_list = cards
 
         if all([card[0] == "c" for card in self.card_list]):
-            raise ValueError(f"Invalid deck: contains all continue cards.")
+            raise ValueError("Invalid deck: contains all continue cards.")
 
     def shuffle_deck(self):
         self.empty_deck()
@@ -45,19 +46,16 @@ class GloomhavenDeck:
                 return MODIFIER_APPLIER[drawn_card](attack_dmg)
 
     def __repr__(self):
-        return "\n".join([
-            self.name if self.name is not None else "",
-            f"Cards: {', '.join(self.card_list)}",
-            f"Current Deck: {', '.join(reversed(self.current_deck))}",
-        ])
+        return "\n".join(
+            [
+                self.name if self.name is not None else "",
+                f"Cards: {', '.join(self.card_list)}",
+                f"Current Deck: {', '.join(reversed(self.current_deck))}",
+            ]
+        )
 
     def __str__(self):
         return self.__repr__()
 
     def copy(self):
-        return GloomhavenDeck(
-            cards=self.card_list
-        )
-
-
-
+        return GloomhavenDeck(cards=self.card_list)
