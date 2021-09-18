@@ -2,6 +2,18 @@
 
 Attack modifier deck simulator and probability calculator for the popular board game and Steam game Gloomhaven. The probablity calculations are non-trivial given the re-shuffling logic.
 
+
+## Installation
+To install base dependencies use:
+```shell
+poetry install
+```
+To install the additional dependencies for running the example notebooks use:
+```shell
+poetry install -E analyze
+```
+
+## Example
 Here's an example of the calculated probabilities for the base modifier deck:
 
 <h3 align=left> Attack PDFs </h3>
