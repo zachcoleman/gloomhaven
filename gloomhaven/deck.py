@@ -23,6 +23,8 @@ class GloomhavenDeck:
         if mod_applier is None:
             self.mod_applier = ModDeckApplier(self.mod_fn_factory)
             self._build_modifier_fns()
+        else:
+            self.mod_applier = mod_applier
 
         # create copy
         self.current_deck = [*self.card_list]
@@ -67,6 +69,20 @@ class GloomhavenDeck:
     def _draw_card(self) -> str:
         return self.current_deck.pop()
 
+    def remove_card(self, card: str) -> bool:
+        for idx, c in enumerate(self.card_list):
+            if c == card:
+                _ = self.card_list.pop(idx)
+                self._reset_deck()
+                return True
+        return False
+
+    def add_card(self, card: str) -> bool:
+        self.card_list.append(card)
+        self._build_modifier_fns()
+        self._reset_deck()
+        return True
+
     def draw(self) -> str:
         """Draw card based on playing rules"""
 
@@ -104,7 +120,7 @@ class GloomhavenDeck:
     ) -> List[int]:
         if fresh:
             self._reset_deck()
-            self._shuffle_deck
+            self._shuffle_deck()
 
         res = []
         for attack in base_attacks:
@@ -113,7 +129,9 @@ class GloomhavenDeck:
 
     def copy(self):
         new_deck = GloomhavenDeck(
-            cards=self.card_list, mod_applier=self.mod_applier, name=f"{self.name}_copy"
+            cards=[*self.card_list],
+            mod_applier=self.mod_applier,
+            name=f"{self.name}_copy",
         )
         new_deck.current_deck = [*self.current_deck]
         return new_deck

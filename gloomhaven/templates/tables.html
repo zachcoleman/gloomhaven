@@ -7,15 +7,10 @@
     }
 </style>
 
-
+{%for t in tables%}
     <h2>
-        C
+        {{ t[0] }}
     </h2>
-    D
+    {{ t[1] }}
     <br>
-
-    <h2>
-        <
-    </h2>
-    t
-    <br>
+{%endfor%}
