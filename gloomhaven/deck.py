@@ -50,6 +50,14 @@ class GloomhavenDeck:
     def _parse_attack_continue_card(card: str):
         return card[1:]
 
+    @staticmethod
+    def _parse_effects(card: str):
+        return card.split(";")[1:]
+    
+    @staticmethod
+    def _parse_non_effects(card: str):
+        return card.split(";")[0]
+             
     def _build_modifier_fns(self):
         # build default ones
         self.mod_applier["Miss"] = lambda x: 0
@@ -58,7 +66,8 @@ class GloomhavenDeck:
         # generate mod fns
         for card in set(self.card_list):
             if card not in ["Miss", "2x"] and not self._is_continue_card(card):
-                self.mod_applier[card] = self.mod_fn_factory(card)
+                base_card = self._parse_non_effects(card)
+                self.mod_applier[base_card] = self.mod_fn_factory(base_card)
 
     def _shuffle_deck(self):
         random.shuffle(self.current_deck)
@@ -105,13 +114,18 @@ class GloomhavenDeck:
         """Get a final attack value from a base attack"""
         card = self.draw()
         attack_dmg = base_attack
+        total_effects = set()
         while True:
+            base_card, effects = self._parse_non_effects(card), self._parse_effects(card)
+            _ = [total_effects.add(e) for e in effects]
+
             if self._is_continue_card(card):
-                card = self._parse_attack_continue_card(card)
-                attack_dmg = self.mod_applier[card](attack_dmg)
+                base_card = self._parse_attack_continue_card(base_card)
+                attack_dmg = self.mod_applier[base_card](attack_dmg)
                 card = self.draw()
             else:
-                return self.mod_applier[card](attack_dmg)
+                attack_dmg = self.mod_applier[base_card](attack_dmg)
+                return attack_dmg, total_effects
 
     def simulate(
         self,
