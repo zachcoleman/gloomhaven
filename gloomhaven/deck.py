@@ -53,11 +53,11 @@ class GloomhavenDeck:
     @staticmethod
     def _parse_effects(card: str):
         return card.split(";")[1:]
-    
+
     @staticmethod
     def _parse_non_effects(card: str):
         return card.split(";")[0]
-             
+
     def _build_modifier_fns(self):
         # build default ones
         self.mod_applier["Miss"] = lambda x: 0
@@ -116,7 +116,9 @@ class GloomhavenDeck:
         attack_dmg = base_attack
         total_effects = set()
         while True:
-            base_card, effects = self._parse_non_effects(card), self._parse_effects(card)
+            base_card, effects = self._parse_non_effects(card), self._parse_effects(
+                card
+            )
             _ = [total_effects.add(e) for e in effects]
 
             if self._is_continue_card(card):
