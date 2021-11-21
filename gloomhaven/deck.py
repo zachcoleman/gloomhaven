@@ -96,16 +96,16 @@ class GloomhavenDeck:
                 card = self.draw()
             else:
                 return self.mod_applier[card](attack_dmg)
-    
+
     def simulate(
         self,
         base_attacks: Union[List[int], Generator[int, Any, Any]],
-        fresh: bool = True
+        fresh: bool = True,
     ) -> List[int]:
         if fresh:
             self._reset_deck()
             self._shuffle_deck
-        
+
         res = []
         for attack in base_attacks:
             res.append(self.get_attack(attack))
