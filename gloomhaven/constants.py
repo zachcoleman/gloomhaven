@@ -1,5 +1,3 @@
-from .mod_applier import ModDeckApplier, mod_applier_fn
-
 DEFAULT_DECK = [
     "Miss",
     "2x",
@@ -11,7 +9,3 @@ DEFAULT_DECK = [
 ]
 
 RESET_LIST = ["Miss", "2x"]
-
-MODIFIER_APPLIER = ModDeckApplier(mod_applier_fn)
-MODIFIER_APPLIER["Miss"] = lambda x: 0
-MODIFIER_APPLIER["2x"] = lambda x: 2 * x
