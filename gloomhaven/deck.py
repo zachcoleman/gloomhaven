@@ -1,5 +1,5 @@
 import random
-from typing import Any, Generator, List, Union
+from typing import Any, Generator, List, Set, Tuple, Union
 
 from gloomhaven.mod_applier import ModDeckApplier
 
@@ -79,6 +79,7 @@ class GloomhavenDeck:
         return self.current_deck.pop()
 
     def remove_card(self, card: str) -> bool:
+        """Remove a card from the card list"""
         for idx, c in enumerate(self.card_list):
             if c == card:
                 _ = self.card_list.pop(idx)
@@ -87,6 +88,7 @@ class GloomhavenDeck:
         return False
 
     def add_card(self, card: str) -> bool:
+        """Add a card to the card list"""
         self.card_list.append(card)
         self._build_modifier_fns()
         self._reset_deck()
@@ -94,44 +96,62 @@ class GloomhavenDeck:
 
     def draw(self) -> str:
         """Draw card based on playing rules"""
-
         # if deck is empty reset and shuffle
         if not self.current_deck:
             self._reset_deck()
             self._shuffle_deck()
 
         # draw card
-        card = self._draw_card()
+        return self._draw_card()
 
-        # reset deck if necessary
-        if card in self.RESET_SET:
+    def get_attacks(self, base_attacks: List[int]) -> List[Tuple[int, Set[str]]]:
+        """Get a final attack values from a list of base attacks
+
+        Args:
+            - base_attacks: int value for base attack value
+        """
+        
+        rets = []
+        _reset = False
+        
+        for attack_dmg in base_attacks:
+
+            card = self.draw()
+            total_effects = set()
+
+            # card draw loop
+            while True:
+                
+                # decide if deck needs to be reset
+                if card in self.RESET_SET:
+                    _reset = True
+                
+                # parse card
+                base_card, effects = self._parse_non_effects(card), self._parse_effects(
+                    card
+                )
+                _ = [total_effects.add(e) for e in effects]
+
+                if self._is_continue_card(card):
+                    base_card = self._parse_attack_continue_card(base_card)
+                    attack_dmg = self.mod_applier[base_card](attack_dmg)
+                    card = self.draw()
+                else:
+                    attack_dmg = self.mod_applier[base_card](attack_dmg)
+                    break  # don't draw anymore
+
+            # add to return
+            rets.append((attack_dmg, total_effects))
+        
+        if _reset:
             self._reset_deck()
             self._shuffle_deck()
 
-        return card
-
-    def get_attack(self, base_attack: int):
-        """Get a final attack value from a base attack"""
-        card = self.draw()
-        attack_dmg = base_attack
-        total_effects = set()
-        while True:
-            base_card, effects = self._parse_non_effects(card), self._parse_effects(
-                card
-            )
-            _ = [total_effects.add(e) for e in effects]
-
-            if self._is_continue_card(card):
-                base_card = self._parse_attack_continue_card(base_card)
-                attack_dmg = self.mod_applier[base_card](attack_dmg)
-                card = self.draw()
-            else:
-                attack_dmg = self.mod_applier[base_card](attack_dmg)
-                return attack_dmg, total_effects
+        return rets
 
     def simulate(
         self,
-        base_attacks: Union[List[int], Generator[int, Any, Any]],
+        base_attacks: Union[List[List[int]], Generator[List[int], Any, Any]],
         fresh: bool = True,
     ) -> List[int]:
         if fresh:
@@ -139,8 +159,8 @@ class GloomhavenDeck:
             self._shuffle_deck()
 
         res = []
-        for attack in base_attacks:
-            res.append(self.get_attack(attack))
+        for attacks in base_attacks:
+            res.append(self.get_attacks(attacks))
         return res
 
     def copy(self):
