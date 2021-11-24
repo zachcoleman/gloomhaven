@@ -110,10 +110,10 @@ class GloomhavenDeck:
         Args:
             - base_attacks: int value for base attack value
         """
-        
+
         rets = []
         _reset = False
-        
+
         for attack_dmg in base_attacks:
 
             card = self.draw()
@@ -121,11 +121,11 @@ class GloomhavenDeck:
 
             # card draw loop
             while True:
-                
+
                 # decide if deck needs to be reset
                 if card in self.RESET_SET:
                     _reset = True
-                
+
                 # parse card
                 base_card, effects = self._parse_non_effects(card), self._parse_effects(
                     card
@@ -142,7 +142,7 @@ class GloomhavenDeck:
 
             # add to return
             rets.append((attack_dmg, total_effects))
-        
+
         if _reset:
             self._reset_deck()
             self._shuffle_deck()
